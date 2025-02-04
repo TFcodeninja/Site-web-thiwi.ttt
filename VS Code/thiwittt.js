@@ -35,6 +35,6 @@ document.addEventListener("scroll", () => {
 
   console.log(window.scrollY);
   let scrollY = window.scrollY;
-  layer1.style.bottom = scrollY * 0.4 + "px";
+  layer1.style.bottom = scrollY * 0.3 + "px";
   layer2.style.bottom = scrollY * 1 + "px";
 });
