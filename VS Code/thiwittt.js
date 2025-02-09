@@ -1,4 +1,6 @@
 window.addEventListener("load", () => {
+  document.body.style.overflow = "hidden"; // Block scrolling during loading
+
   const loader = document.createElement("div");
   loader.id = "loader";
   loader.innerHTML = `
@@ -11,16 +13,14 @@ window.addEventListener("load", () => {
   document.body.appendChild(loader);
 
   const words = [
-    "Tatouage", // French
-    "Tatuaje", // Spanish
-    "Tatuagem", // Portuguese
-    "Tatuaggio", // Italian
-    "Tatouage", // Haitian Creole
-    "Tatważ", // Maltese
-    "Tatważe", // Esperanto
-    "Tatważ", // Welsh
-    "Tatważ", // Basque
-    "Tatważ", // Galician
+    "Tatouage",
+    "Tattoo",
+    "刺青",
+    "Татуировка",
+    "Tatuagem",
+    "Tatuaje",
+    "タトゥ",
+    "문신",
   ];
 
   let currentIndex = 0;
@@ -29,15 +29,20 @@ window.addEventListener("load", () => {
     document.getElementById("loader-word").textContent = words[currentIndex];
   };
 
-  const intervalId = setInterval(changeWord, 300); // Change word every 300ms
+  const intervalId = setInterval(changeWord, 200); // change word fast or slow
 
   setTimeout(() => {
     clearInterval(intervalId);
+
+    window.scrollTo(0, 0); // 🔥 take care to be up
+
     loader.style.transition = "opacity 1s ease, visibility 1s ease";
     loader.style.opacity = "0";
     loader.style.visibility = "hidden";
+
     setTimeout(() => {
       loader.style.display = "none";
-    }, 1000);
-  }, 3000);
+      document.body.style.overflow = "auto"; // Re-enable scrolling after the loader disappears
+    }, 2000);
+  }, 2000);
 });
