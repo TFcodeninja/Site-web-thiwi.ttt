@@ -1,40 +1,48 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const loaderText = document.getElementById("loader-text");
-  const loader = document.querySelector(".loader");
+window.addEventListener("load", () => {
+  document.body.style.overflow = "hidden"; // Block scrolling during loading
+
+  const loader = document.createElement("div");
+  loader.id = "loader";
+  loader.innerHTML = `
+    <div class="loader-content">
+      <div class="loader-text">
+        <span id="loader-word">Tatouage</span>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(loader);
+
   const words = [
     "Tatouage",
     "Tattoo",
-    "Tatuaje",
-    "Tatuagem",
-    "Tätowierung",
-    "Татуировка",
     "刺青",
-    "纹身",
-    "타투",
-    "タトゥー",
+    "Татуировка",
+    "Tatuagem",
+    "Tatuaje",
+    "タトゥ",
+    "문신",
   ];
-  let index = 0;
 
-  function changeWord() {
-    loaderText.textContent = words[index];
-    index = (index + 1) % words.length;
-  }
+  let currentIndex = 0;
+  const changeWord = () => {
+    currentIndex = (currentIndex + 1) % words.length;
+    document.getElementById("loader-word").textContent = words[currentIndex];
+  };
 
-  setInterval(changeWord, 100);
+  const intervalId = setInterval(changeWord, 200); // change word fast or slow
 
   setTimeout(() => {
-    loader.classList.add("fade-out"); // Ajout de la classe pour le fondu
+    clearInterval(intervalId);
+
+    window.scrollTo(0, 0); // 🔥 take care to be up
+
+    loader.style.transition = "opacity 1s ease, visibility 1s ease";
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
+
     setTimeout(() => {
-      loader.style.display = "none"; // Masquer le loader après la transition
-    }, 1000); // Délai correspondant à la durée de la transition
-  }, 3000);
-});
-
-document.addEventListener("scroll", () => {
-  console.log("Pute");
-
-  console.log(window.scrollY);
-  let scrollY = window.scrollY;
-  layer1.style.bottom = scrollY * 0.4 + "px";
-  layer2.style.bottom = scrollY * 1 + "px";
+      loader.style.display = "none";
+      document.body.style.overflow = "auto"; // Re-enable scrolling after the loader disappears
+    }, 2000);
+  }, 2000);
 });
